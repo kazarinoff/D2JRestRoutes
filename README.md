@@ -10,11 +10,11 @@ A brief file to transfer Django model objects into restful endpoints
     
     myapi=RestfulModel(MyModel)
     
-4a.Easiest- set URL parameters to include default_routes() method (this outputs an array of django paths: index/,<id>/,create/,<id>/edit/,<id>/delete/).
+4a.Easiest- set URL parameters to include default_routes() method (this outputs an array of django paths: index/,<id>/,create/,<id>/edit/,<id>/delete/,search/,random/,).
     
     path('',include(myapi.default_routes()))
     
-4b.Set individual URLs to use object methods as views(methods are:index,show,create,edit,delete)
+4b.Set individual URLs to use object methods as views(methods are:index,show,create,edit,delete,search,random)
     
     path('index',myapi.index,name='index')
 
@@ -27,12 +27,18 @@ still working on how this presents...)
 ## Notes:
 Be sure to makemigrations and migrate
 
+Create, edit, & search routes take params from request to do their thing
+
 default_routes() takes optional post & crsf variables, defaults to False. 
     If post is True, create, edit,& delete routes will only accept post requests. If crsf is True, post requests must be validated to be       accepted (I dont think this feature is actually working but maybe kinda)
     
 Currently faulty requests output a mostly generic error message in a json dictionary- be sure to include all model object fields in create requests.
 
 ## Still to implement:
+
+~~random route~~
+~~search route~~
+
 accept apikey in some form
 
 finish crsf ability
