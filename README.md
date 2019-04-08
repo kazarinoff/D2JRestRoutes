@@ -8,15 +8,15 @@ A brief file to transfer Django model objects into restful endpoints
 
 3.create a local RestfulModel from the Django Model
     
-    myapi=RestfulModel(mymodel)
+    myapi=RestfulModel(MyModel)
     
-4a.Set URL parameters to include default_routes() method
+4a.Easiest- set URL parameters to include default_routes() method (this outputs an array of django paths: index/,<id>/,create/,<id>/edit/,<id>/delete/).
     
     path('',include(myapi.default_routes()))
     
 4b.Set individual URLs to use object methods as views(methods are:index,show,create,edit,delete)
     
-    path('index',mymodel.index,name='index')
+    path('index',myapi.index,name='index')
 
 (4c.Individual URLS can be set to include individual routes methods
     
@@ -29,3 +29,5 @@ Be sure to makemigrations and migrate
 
 default_routes() takes optional post & crsf variables, defaults to False. 
     If post is True, create, edit,& delete routes will only accept post requests. If crsf is True, post requests must be validated to be       accepted (I dont think this feature is actually working but maybe kinda)
+    
+Currently faulty requests output a mostly generic error message in a json dictionary- be sure to include all model object fields in create requests.
