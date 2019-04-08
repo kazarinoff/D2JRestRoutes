@@ -193,6 +193,34 @@ def RestfulModel(mmo):
                 except:
                     return JsonResponse({'msg':"Error. Couldn't delete "+self.modelname+" with id "+str(eid)}, safe=False) 
 
+        def search(self,request):
+            if (request.method=='GET'):
+                params=request.GET.dict()
+            elif (request.method=='POST'):
+                params=request.POST.dict()
+            else:
+                params=request.GET.dict().items()
+            entrys=mmo.objects.filter(**params)
+            entryarray=[]
+            for entry in entrys:
+                entryarray.append(objectdict(entry))
+            return JsonResponse({self.modelname+"s":entryarray},safe=False)
+
+        def random(self,request):
+            try:
+                x=mmo.objects.last().id
+            except:
+                return JsonResponse({'msg':"Error. Random is broken"}, safe=False)
+            counter=1
+            while (counter<50):
+                entryid=random.randint(1,x)
+                try:
+                    entry=mmo.objects.get(id=entryid)
+                    return JsonResponse(objectdict(entry),safe=False)
+                except:
+                    counter+=1
+            return JsonResponse({'msg':"Error. Random is broken. You may have deleted too many database entries"}, safe=False)
+
         def default_routes(self,post=False,csrf=False):
             url_patterns=[
                 path('all/',self.index,name='all'),
@@ -202,6 +230,8 @@ def RestfulModel(mmo):
                 path('<int:eid>/',self.show,{'post':post,'csrf':csrf},name='show'),
                 path('<int:eid>/delete/',self.delete,{'post':post,'csrf':csrf},name='delete'),
                 path('<int:eid>/edit/',self.edit,{'post':post,'csrf':csrf},name='edit'),
+                path('search/',self.search,name='search'),   
+                path('random/',self.random,name='random'),         
             ]
             return url_patterns
         def index_route(self,url='index'):
@@ -214,5 +244,10 @@ def RestfulModel(mmo):
             return [path('<int:eid>/'+url+'/',self.edit,{'post':post,'csrf':csrf},name='edit')]
         def delete_route(self,url='delete',post=False,csrf=False):
             return [path('<int:eid>/'+url+'/',self.delete,{'post':post,'csrf':csrf},name='delete')]
+        def search_route(self,url='search'):
+            return [path(url+"/",self.search,name='search')]
+        def random_route(self,url='random'):
+            return [path(url+"/",self.random,name='random')]
+
 
     return RestfulModelObject()
