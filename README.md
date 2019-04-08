@@ -2,7 +2,7 @@
 A brief file to transfer Django model objects into restful endpoints
 
 ## To use:
-1.Pull file into app folder it's to be used in
+1.Pull file into app folder it's to be used in (packagization or whatnot coming soon)
 
 2.In app URLs file, Import RestfulModel, along w/ your Django Model object
 
