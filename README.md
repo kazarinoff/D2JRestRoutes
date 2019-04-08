@@ -21,4 +21,6 @@ still working on how this presents...)
 
 ## Notes:
 Be sure to makemigrations and migrate
-default_routes() takes optional post & crsf variables, defaults to False. If post is True, create, edit,& delete routes will only accept post requests. If crsf is True, post requests must be validated to be accepted (I dont think this feature is actually working but maybe kinda)
+
+default_routes() takes optional post & crsf variables, defaults to False. 
+    If post is True, create, edit,& delete routes will only accept post requests. If crsf is True, post requests must be validated to be       accepted (I dont think this feature is actually working but maybe kinda)
