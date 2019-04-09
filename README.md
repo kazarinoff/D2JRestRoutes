@@ -31,8 +31,6 @@ Create, edit, & search routes take params from request to do their thing
 
 default_routes() takes optional post & crsf variables, defaults to False. 
     If post is True, create, edit,& delete routes will only accept post requests. If crsf is True, post requests must be validated to be       accepted (I dont think this feature is actually working but maybe kinda)
-    
-Currently faulty requests output a mostly generic error message in a json dictionary- be sure to include all model object fields in create requests.
 
 ## Still to implement:
 
