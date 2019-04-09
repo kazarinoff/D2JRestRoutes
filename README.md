@@ -45,3 +45,7 @@ finish crsf ability
 
 package/modulize it
 
+deal w/ manytomany relationships
+
+xml options?
+
