@@ -35,9 +35,9 @@ def RestfulModel(mmo):
                         entry=mmo.objects.last()
                         return JsonResponse(objectdict(entry),safe=False)
                     except:
-                        return JsonResponse({'msg':"Error. Couldn't create a "+self.modelname}, safe=False)
+                        return JsonResponse({'message':"Error. Couldn't create a "+self.modelname}, status=400,safe=False)
                 else:
-                    return JsonResponse({'msg':"Error. Couldn't create a "+self.modelname}, safe=False)
+                    return JsonResponse({'message':"Only POST request accepted"}, status=405,safe=False)
             
             def postunprotected(request):
                 if (request.method=='POST'):
@@ -50,9 +50,9 @@ def RestfulModel(mmo):
                         entry=mmo.objects.last()
                         return JsonResponse(objectdict(entry),safe=False)
                     except:
-                        return JsonResponse({'msg':"Error. Couldn't create a "+self.modelname}, safe=False)
+                        return JsonResponse({'message':"Error. Couldn't create a "+self.modelname}, status=400,safe=False)
                 else:
-                    return JsonResponse({'msg':"Error. Couldn't create a "+self.modelname}, safe=False)
+                    return JsonResponse({'message':"Only POST request accepted"}, status=405,safe=False)
             if (post):
                 if (csrf):
                     return postprotected(request)
@@ -69,7 +69,7 @@ def RestfulModel(mmo):
                         entry=mmo.objects.last()
                         return JsonResponse(objectdict(entry),safe=False)
                     except:
-                        return JsonResponse({'msg':"Error. Couldn't create a "+self.modelname}, safe=False)
+                        return JsonResponse({'message':"Error. Couldn't create a "+self.modelname}, status=400,safe=False)
                 else:
                     try:
                         params=request.GET.dict()
@@ -80,7 +80,7 @@ def RestfulModel(mmo):
                         entry=mmo.objects.last()
                         return JsonResponse(objectdict(entry),safe=False)
                     except:
-                        return JsonResponse({'msg':"Error. Couldn't create a "+self.modelname}, safe=False)
+                        return JsonResponse({'message':"Error. Couldn't create a "+self.modelname}, status=400,safe=False)
 
         @csrf_exempt
         def show(self,request,eid,post=False,csrf=False):
@@ -93,7 +93,7 @@ def RestfulModel(mmo):
             try:
                 entry=mmo.objects.get(id=eid)
             except:
-                return JsonResponse({'msg':"Error. Couldn't find a "+self.modelname+" with id "+str(eid)}, safe=False)
+                return JsonResponse({'message':"Error. Couldn't find a "+self.modelname+" with id "+str(eid)}, status=404,safe=False)
             return JsonResponse(objectdict(entry),safe=False)
 
         @csrf_exempt
@@ -101,7 +101,7 @@ def RestfulModel(mmo):
             try:
                 entry=mmo.objects.get(id=eid)
             except:
-                return JsonResponse({'msg':"Error. Couldn't find a "+self.modelname+" with id "+str(eid)}, safe=False)
+                return JsonResponse({'message':"Error. Couldn't find a "+self.modelname+" with id "+str(eid)}, status=404,safe=False)
             
             @csrf_protect
             def editprotected(request):
@@ -113,10 +113,10 @@ def RestfulModel(mmo):
                         entry=mmo.objects.get(id=eid)
                         entry.save()
                     except:
-                        return JsonResponse({'msg':"Error. Couldn't edit "+self.modelname+" with id "+str(eid)}, safe=False)
+                        return JsonResponse({'message':"Error. Couldn't edit "+self.modelname+" with id "+str(eid)},status=404, safe=False)
                     return JsonResponse(objectdict(entry),safe=False)
                 else:
-                    return JsonResponse({'msg':"Error. Couldn't edit "+self.modelname+" with id "+str(eid)}, safe=False)
+                    return JsonResponse({'message':"Only POST request accepted"}, status=405,safe=False)
             
             def editunprotected(request):
                 if (request.method=='POST'):
@@ -127,10 +127,10 @@ def RestfulModel(mmo):
                         entry.save()
                         entry=mmo.objects.get(id=eid)
                     except:
-                        return JsonResponse({'msg':"Error. Couldn't edit "+self.modelname+" with id "+str(eid)}, safe=False)
+                        return JsonResponse({'message':"Error. Couldn't edit "+self.modelname+" with id "+str(eid)}, status=400,safe=False)
                     return JsonResponse(objectdict(entry),safe=False)
                 else:
-                    return JsonResponse({'msg':"Error. Couldn't edit "+self.modelname+" with id "+str(eid)}, safe=False)
+                    return JsonResponse({'message':"Only POST request accepted"}, status=405,safe=False)
             if (post):
                 if (csrf):
                     return editprotected(request)
@@ -145,7 +145,7 @@ def RestfulModel(mmo):
                         entry.save()
                         entry=mmo.objects.get(id=eid)
                     except:
-                        return JsonResponse({'msg':"Error. Couldn't edit "+self.modelname+" with id "+str(eid)}, safe=False)
+                        return JsonResponse({'message':"Error. Couldn't edit "+self.modelname+" with id "+str(eid)}, safe=False,status=400)
                     return JsonResponse(objectdict(entry),safe=False)
                 elif request.method=='GET':
                     params=request.GET.dict()
@@ -155,10 +155,10 @@ def RestfulModel(mmo):
                         entry.save()
                         entry=mmo.objects.get(id=eid)
                     except:
-                        return JsonResponse({'msg':"Error. Couldn't edit "+self.modelname+" with id "+str(eid)}, safe=False)
+                        return JsonResponse({'message':"Error. Couldn't edit "+self.modelname+" with id "+str(eid)}, status=400,safe=False)
                     return JsonResponse(objectdict(entry),safe=False)
                 else:
-                    return JsonResponse({'msg':"Error. Couldn't edit "+self.modelname+" with id "+str(eid)}, safe=False)
+                    return JsonResponse({'message':"Error. Couldn't edit "+self.modelname+" with id "+str(eid)}, status=400,safe=False)
 
         def index(self,request):
             entrys=mmo.objects.all()
@@ -174,24 +174,24 @@ def RestfulModel(mmo):
                     try:
                         entry=mmo.objects.get(id=eid)
                     except:
-                        return JsonResponse({'msg':"Error. Couldn't find "+self.modelname+" with id "+str(eid)}, safe=False)
+                        return JsonResponse({'message':"Error. Couldn't find "+self.modelname+" with id "+str(eid)}, status=404,safe=False)
                     try:
                         self._delete(eid)
-                        return JsonResponse({'msg':self.modelname+" with id "+str(eid)+" deleted"}, safe=False)
+                        return JsonResponse({'message':self.modelname+" with id "+str(eid)+" deleted"}, safe=False)
                     except:
-                        return JsonResponse({'msg':"Error. Couldn't delete "+self.modelname+" with id "+str(eid)}, safe=False)
+                        return JsonResponse({'message':"Error. Couldn't delete "+self.modelname+" with id "+str(eid)}, status=400,safe=False)
                 else:
-                    return JsonResponse({'msg':"Error. Couldn't edit "+self.modelname+" with id "+str(eid)}, safe=False)
+                    return JsonResponse({'message':"Error. Couldn't edit "+self.modelname+" with id "+str(eid)}, status=404,safe=False)
             else:
                 try:
                     entry=mmo.objects.get(id=eid)
                 except:
-                    return JsonResponse({'msg':"Error. Couldn't find "+self.modelname+" with id "+str(eid)}, safe=False)
+                    return JsonResponse({'message':"Error. Couldn't find "+self.modelname+" with id "+str(eid)}, status=404,safe=False)
                 try:
                     self._delete(eid)
-                    return JsonResponse({'msg':self.modelname+" with id "+str(eid)+" deleted"}, safe=False)
+                    return JsonResponse({'message':self.modelname+" with id "+str(eid)+" deleted"}, safe=False)
                 except:
-                    return JsonResponse({'msg':"Error. Couldn't delete "+self.modelname+" with id "+str(eid)}, safe=False) 
+                    return JsonResponse({'message':"Error. Couldn't delete "+self.modelname+" with id "+str(eid)}, status=400,safe=False) 
 
         def search(self,request):
             if (request.method=='GET'):
@@ -210,7 +210,7 @@ def RestfulModel(mmo):
             try:
                 x=mmo.objects.last().id
             except:
-                return JsonResponse({'msg':"Error. Random is broken"}, safe=False)
+                return JsonResponse({'message':"Error. Random is broken"}, status=500,safe=False)
             counter=1
             while (counter<50):
                 entryid=random.randint(1,x)
@@ -219,7 +219,7 @@ def RestfulModel(mmo):
                     return JsonResponse(objectdict(entry),safe=False)
                 except:
                     counter+=1
-            return JsonResponse({'msg':"Error. Random is broken. You may have deleted too many database entries"}, safe=False)
+            return JsonResponse({'message':"Error. Random is broken. You may have deleted too many database entries"}, status=400,safe=False)
 
         def default_routes(self,post=False,csrf=False):
             url_patterns=[

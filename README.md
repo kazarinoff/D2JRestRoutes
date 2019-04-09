@@ -47,5 +47,5 @@ package/modulize it
 
 deal w/ manytomany relationships
 
-xml options?
+~~add response status codes~~
 
