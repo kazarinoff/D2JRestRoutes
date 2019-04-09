@@ -1,5 +1,5 @@
 # DjangoRestRoutes
-A brief file to transfer Django model objects into restful endpoints
+A module to translate Django model objects into restful endpoints
 
 ## To use:
 1.Pull file into app folder it's to be used in (packagization or whatnot coming soon)
