@@ -18,12 +18,6 @@ A module to translate Django model objects into restful endpoints
     
     path('index',myapi.index,name='index')
 
-(4c. Individual URLS can be set to include individual routes methods
-    
-    path('',include(myapi.index(name=all)))
-
-still working on how this presents...)
-
 ## Notes:
 Be sure to makemigrations and migrate
 
