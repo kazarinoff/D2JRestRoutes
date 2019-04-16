@@ -2,7 +2,7 @@
 A module to translate Django model objects into restful endpoints
 
 ## To use:
-1.Pull file into app folder it's to be used in (packagization or whatnot coming soon)
+1.Pull file into app folder it's to be used for.
 
 2.In app URLs file, Import RestfulModel, along w/ your Django Model object
 
@@ -14,7 +14,7 @@ A module to translate Django model objects into restful endpoints
     
     path('',include(myapi.default_routes()))
     
-4b.Set individual URLs to use object methods as views(methods are:index,show,create,edit,delete,search,random)
+4b.Set individual URLs to use object methods as views(available methods are:index,show,create,edit,delete,search,random)
     
     path('index',myapi.index,name='index')
 
