@@ -1,5 +1,5 @@
 # DjangoRestRoutes
-A module to translate Django model objects into restful endpoints
+A module to translate Django model objects into JSON restful endpoints
 
 ## To use:
 1. Pull file into app folder it's to be used for.
@@ -14,7 +14,7 @@ A module to translate Django model objects into restful endpoints
     
     path('',include(myapi.default_routes()))
     
-4b. Set individual URLs to use object methods as views(available methods are:index,show,create,edit,delete,search,random)
+4b. Set individual URLs to use object methods as views- available methods are:index,show,create,edit,delete,search,random. Note that show, edit, and delete require an <eid> to be included in the route url.
     
     path('index',myapi.index,name='index')
 
