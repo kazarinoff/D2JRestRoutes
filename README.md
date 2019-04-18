@@ -7,7 +7,7 @@ A module to translate Django model objects into JSON restful endpoints
 2. In app URLs file, Import RestfulModel, along w/ your Django Model object
 
 3. Create a local RestfulModel from the Django Model
-    
+
     myapi=RestfulModel(MyModel)
     
 4a. Easiest- set URL parameters to include default_routes() method (this outputs an array of django paths: index/,<id>/,create/,<id>/edit/,<id>/delete/,search/,random/,).
